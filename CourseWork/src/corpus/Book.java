@@ -20,7 +20,7 @@ public class Book<T> {
 		author = new Author(authorName);
 	}
 	
-	public void addSe(T t){
+	public void add(T t){
 		subSections.add(t);
 	}
 	
