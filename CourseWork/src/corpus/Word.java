@@ -1,11 +1,9 @@
 package corpus;
 
-import java.util.ArrayList;
-
 /**
  * A class which models a Word within the Book.
  * 
- * @author S Saddique
+ * @author S Saddique, M Harding
  * @version 08/12/2016
  *
  */
@@ -32,5 +30,10 @@ public class Word {
 			}
 		}
 		return j;
+	}
+	
+	public String getWord()
+	{
+		return word; 
 	}
 }
