@@ -14,22 +14,31 @@ public class Book<T> {
 	private ArrayList<T> subSections;
 	private Author author;
 	
-	public Book(String bookTitle, String authorName) {
+	public Book(String bookTitle, String authorName) 
+	{
 		title = bookTitle;
 		subSections = new ArrayList<T>();
 		author = new Author(authorName);
 	}
 	
-	public void addSe(T t){
+	public void addSub(T t)
+	{
 		subSections.add(t);
 	}
 	
 	// Method which returns an object within the ArrayList.
-	public T get() {
+	public T get() 
+	{
 		return null;
 	}
 	
-	public String toString() {
+	public String toString() 
+	{
 		return "The book is called " + title;
+	}
+	
+	public String getAuthor()
+	{
+		return author.toString();	
 	}
 }

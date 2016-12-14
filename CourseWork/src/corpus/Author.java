@@ -10,11 +10,13 @@ package corpus;
 public class Author {
 	private String name;
 	
-	public Author(String name) {
+	public Author(String name) 
+	{
 		this.name = name;
 	}
 	
-	public String toString() {
+	public String toString() 
+	{
 		return "The author is " + name;
 	}
 }
