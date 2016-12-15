@@ -27,9 +27,9 @@ public class Book<T> {
 	}
 	
 	// Method which returns an object within the ArrayList.
-	public T get() 
+	public T get(int i) 
 	{
-		return null;
+		return subSections.get(i);
 	}
 	
 	public String toString() 
