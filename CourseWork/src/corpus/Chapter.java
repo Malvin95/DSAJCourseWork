@@ -10,14 +10,20 @@ import java.util.ArrayList;
  */
 public class Chapter {
 	
+	private String ID;
 	private ArrayList<Paragraph> paragraphs;
 	
-	public Chapter() 
+	public Chapter(String ID) 
 	{
+		this.ID = ID;
 		paragraphs = new ArrayList<Paragraph>();
 	}
 	
-	public void addParagraph(Paragraph para)
+	public String getID() {
+		return ID;
+	}
+	
+	public void add(Paragraph para)
 	{
 		paragraphs.add(para);
 	}
