@@ -12,16 +12,19 @@ import java.util.ArrayList;
 
 public class Paragraph {
 	
-	private ArrayList<Word> words;
+	private ArrayList<String> words;
 	
 	public Paragraph()
 	{
-		words = new ArrayList<Word>();
+		words = new ArrayList<String>();
 	}
 	
-	public void addWord(Word word)
+	public void add(String paragraph)
 	{
-		words.add(word);
+		String[] paragraphWords = paragraph.split("\\s");
+		for (int i = 0; i < paragraphWords.length; i++) {
+			words.add(paragraphWords[i]);
+		}
 	}
 	
 	/*
@@ -33,7 +36,7 @@ public class Paragraph {
 		int j = 0;
 		for(int i = 0; i < words.size(); i++)
 		{
-			if(s.equals(words.get(i).getWord()))
+			if(s.equals(words.get(i)))
 			{
 				j++;
 			}
@@ -50,14 +53,14 @@ public class Paragraph {
 	
 	public void everyAppearance(String s)
 	{
-		ArrayList<Word> ea = new ArrayList<Word>();
+		ArrayList<String> ea = new ArrayList<String>();
 		
 		for(int i = 0; i < words.size(); i++)
 		{
-			if(s.equals(words.get(i).getWord()))
+			if(s.equals(words.get(i)))
 			{
 				ea.add(words.get(i));
-				System.out.println("Word Index:" + i + ea.get(i).getWord());
+				System.out.println("Word Index:" + i + ea.get(i));
 			}
 		}
 	}
