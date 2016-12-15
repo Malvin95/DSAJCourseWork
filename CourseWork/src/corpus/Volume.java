@@ -28,6 +28,10 @@ public class Volume {
 		chapters.add(ch);
 	}
 	
+	public Chapter get(int i) {
+		return chapters.get(i);
+	}
+	
 	/*
 	 * A method that iterates through the Paragraphs array and check if 
 	 * a Paragraph exists, based on this it returns a boolean.
