@@ -21,7 +21,7 @@ public class Book<T> {
 		author = new Author(authorName);
 	}
 	
-	public void addSub(T t)
+	public void add(T t)
 	{
 		subSections.add(t);
 	}
