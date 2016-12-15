@@ -126,4 +126,16 @@ public class TextReader {
 		//	paragraphText.setLength(0);
 		//}
 	}
+	
+	public Book<Volume> getVolumeBook() {
+		return bookVolume;
+	}
+	
+	public Book<Chapter> getChapterBook() {
+		return bookChapter;
+	}
+	
+	public boolean getHasVolume() {
+		return hasVolume;
+	}
 }
