@@ -27,6 +27,10 @@ public class Paragraph {
 		}
 	}
 	
+	public String get(int i) {
+		return words.get(i);
+	}
+	
 	/*
 	 * A search function that tests to see if a word exists within a paragraph
 	 */
