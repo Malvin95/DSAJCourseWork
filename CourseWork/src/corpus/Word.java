@@ -9,14 +9,13 @@ package corpus;
  */
 public class Word {
 	
+	private String ID;
 	private String word;
-	//private ArrayList<String> W;
-	String[] W;
 	
 	public Word(String word) 
 	{
+		ID = "";
 		this.word = word;
-		W = word.split(" ");
 	}
 	
 	/*
@@ -38,5 +37,13 @@ public class Word {
 	public String getWord()
 	{
 		return word; 
+	}
+	
+	public void setID(String ID) {
+		this.ID = ID;
+	}
+	
+	public String getID() {
+		return ID;
 	}
 }
