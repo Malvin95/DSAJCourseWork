@@ -28,6 +28,10 @@ public class Chapter {
 		paragraphs.add(para);
 	}
 	
+	public Paragraph get(int i) {
+		return paragraphs.get(i);
+	}
+	
 	/*
 	 * A method that iterates through the Paragraphs array and check if 
 	 * a Paragraph exists, based on this it returns a boolean.
