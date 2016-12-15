@@ -10,14 +10,20 @@ import java.util.ArrayList;
  */
 public class Volume {
 	
+	private String ID;
 	private ArrayList<Chapter> chapters;
 	
-	public Volume() 
+	public Volume(String ID) 
 	{
+		this.ID = ID;
 		chapters = new ArrayList<Chapter>();
 	}
 	
-	public void addChapter(Chapter ch)
+	public String getID() {
+		return ID;
+	}
+	
+	public void add(Chapter ch)
 	{
 		chapters.add(ch);
 	}
