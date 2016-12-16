@@ -11,7 +11,6 @@ import java.util.ArrayList;
  */
 
 public class Paragraph {
-	
 	private ArrayList<Word> words;
 	
 	public Paragraph()
@@ -32,6 +31,9 @@ public class Paragraph {
 		return words.get(i);
 	}
 	
+	public int size() {
+		return words.size();
+	}
 	/*
 	 * A search function that tests to see if a word exists within a paragraph
 	 */
@@ -68,6 +70,5 @@ public class Paragraph {
 				System.out.println("Word Index:" + i + ea.get(i));
 			}
 		}
-	}
-	
+	}	
 }
