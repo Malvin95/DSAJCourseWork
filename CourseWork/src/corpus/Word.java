@@ -56,7 +56,15 @@ public class Word {
 		return ID;
 	}
 	
-	public boolean match(String kwicID) {
+	public boolean matchWord(String word) {
+		if (this.word.contains(word)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean matchID(String kwicID) {
 		if (kwicID == ID) {
 			return true;
 		} else {
