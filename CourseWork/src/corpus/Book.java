@@ -12,13 +12,13 @@ import java.util.ArrayList;
 public class Book<T> {
 	private String title;
 	private ArrayList<T> subSections;
-	private Author author;
+	private String author;
 	
 	public Book(String bookTitle, String authorName) 
 	{
 		title = bookTitle;
 		subSections = new ArrayList<T>();
-		author = new Author(authorName);
+		author = authorName;
 	}
 	
 	public void add(T t)
@@ -32,13 +32,12 @@ public class Book<T> {
 		return subSections.get(i);
 	}
 	
-	public String toString() 
-	{
-		return "The book is called " + title;
+	public int size() {
+		return subSections.size();
 	}
 	
-	public String getAuthor()
+	public String toString() 
 	{
-		return author.toString();	
+		return "The book is called " + title + ". /n The author's name is: " + author + ".";
 	}
 }
