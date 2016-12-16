@@ -57,7 +57,7 @@ public class Word {
 	}
 	
 	public boolean matchWord(String word) {
-		if (this.word.contains(word)) {
+		if (this.word.toLowerCase().contains(word.toLowerCase())) {
 			return true;
 		} else {
 			return false;
