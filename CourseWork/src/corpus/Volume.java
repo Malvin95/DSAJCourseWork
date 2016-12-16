@@ -32,6 +32,10 @@ public class Volume {
 		return chapters.get(i);
 	}
 	
+	public int size() {
+		return chapters.size();
+	}
+	
 	/*
 	 * A method that iterates through the Paragraphs array and check if 
 	 * a Paragraph exists, based on this it returns a boolean.
