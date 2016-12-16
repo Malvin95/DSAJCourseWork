@@ -1,10 +1,8 @@
 package bookView;
 
-import java.io.IOException;
-
 public class Main {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		MainController mc = new MainController();
 		TUI tui = new TUI(mc);
 	}
