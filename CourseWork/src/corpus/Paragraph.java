@@ -52,11 +52,17 @@ public class Paragraph {
 	}
 	
 	public String printKWIC(Word word, int contextSize) {
+		int idCount = 1;
+		String wordID = "ID  " + idCount + ": "; 
 		StringBuilder sb = new StringBuilder();
-		sb.append(word.getID());
+		ArrayList<String> str = new ArrayList<String>();
 		for (int i = 0; i < words.size(); i++) {
 			Word w = words.get(i);
-			if (w.equals(word)) {
+			if (w.getWord().contains(word.getWord())) {
+				w.setID(wordID);
+				sb.append(word.getID());
+				idCount++;
+				
 				int startNumber = i - contextSize;
 				
 				if (startNumber < 0) {
@@ -64,27 +70,32 @@ public class Paragraph {
 				}
 				
 				for (int v = startNumber; v < i; v++) {
-					sb.append(words.get(v));
+					sb.append(words.get(v).getWord());
 					sb.append(" ");
 				}
 				
-				sb.append(words.get(i));
+				sb.append(w.getWord());
 				sb.append(" ");
 				
-				int endNumber = i + contextSize;
+				int endNumber = i + contextSize + 1;
 				
 				if (endNumber > words.size()) {
 					endNumber = words.size();
 				}
 				
 				for (int c = i + 1; c < endNumber; c++) {
-					sb.append(words.get(c));
+					sb.append(words.get(c).getWord());
 					sb.append(" ");
 				}
+				//sb.append("\n");
+				//return sb.toString();
+				// if the sb length is > contextSize + 1, split every contextSize + 1 words and 
+				// append those to a different sb
 			}
 		}
-		sb.append("/n");
+		sb.append("\n");
 		return sb.toString();
+		//return null;
 	}
 	
 	/*
