@@ -30,24 +30,34 @@ public class TextReader {
 	private Paragraph currentParagraph = null;
 	StringBuilder paragraphText = new StringBuilder();
 
-	public TextReader(String filename) {
-
-		try{
+	/**
+	 * The constructor which takes in a file and assigns it to a variable and then
+	 * passes it through a BufferedReader() and processes every line of the 
+	 * given text.
+	 * @param filename is the file in which the user wants to process.
+	 */
+	public TextReader(String filename) 
+	{
+		try
+		{
 			fr = new FileReader(filename);
 			br = new BufferedReader(fr);
 			String currentLine = br.readLine();
-			while (currentLine != null) {
+			while (currentLine != null) 
+			{
 				processLine(currentLine);    
 				currentLine = br.readLine();
 			}
 			//System.out.print("file read");
-		} catch(Exception e){
+		} 
+		catch(Exception e)
+		{
 			e.printStackTrace();
-
 		}
 	}
 
-	private void processLine(String str) {
+	private void processLine(String str)
+	{
 		// 1: Take in the text file
 		// 2: Process it line by line
 		// 3: If line contains "Title: [book name]", That needs to be set to the book title
@@ -58,60 +68,94 @@ public class TextReader {
 		// 8: If another line of text, add it into a stringbuilder for the paragraph object.
 		// 9: If a line break, this signals the end of the paragraph.
 		
-		if (str.contains("Title: ") == true) {
+		if (str.contains("Title: ") == true) 
+		{
 			processBookTitle(str);
-		} else if (str.contains("Author: ") == true) {
+		} 
+		else if (str.contains("Author: ") == true) 
+		{
 			processBookAuthor(str);
-		}   else if (str.contains("VOLUME ") == true) {
+		}   
+		else if (str.contains("VOLUME ") == true) 
+		{
 			processVolume(str);
-		} else if (str.contains("CHAPTER ") == true) {
+		} 
+		else if (str.contains("CHAPTER ") == true) 
+		{
 			processChapter(str);
-		} else {
+		}
+		else 
+		{
 			processParagraph(str);
 		}
 	}
-
-	public Book<Volume> getVolumeBook() {
+	
+	/**
+	 * This method returns a Book Array object, this object however is an ArrayList
+	 * of Volumes in which the book is comprised of.
+	 * @return Book<Volume> is an ArrayList of Volume objects that create the book.
+	 */
+	public Book<Volume> getVolumeBook() 
+	{
 		return bookVolume;
 	}
 
-	public Book<Chapter> getChapterBook() {
+	/**
+	 * This method returns a Book Array object, this object however is an ArrayList
+	 * of chapters in which the book is comprised of.
+	 * @return Book<Chapter> is an ArrayList of Chapter objects that create the book.
+	 */
+	public Book<Chapter> getChapterBook() 
+	{
 		return bookChapter;
 	}
 
-	public boolean getHasVolume() {
+	/**
+	 * This method checks whether the book has Volumes within it.
+	 * @return boolean either a true or false value is returned based on the
+	 * 		Contents of the book. 
+	 */
+	public boolean getHasVolume() 
+	{
 		return hasVolume;
 	}
 
-	private void processBookTitle(String str) {
+	private void processBookTitle(String str) 
+	{
 		String[] result = str.split("\\s");
 		StringBuilder sb = new StringBuilder();
-		for (int i = 1; i < result.length; i++) {
+		for (int i = 1; i < result.length; i++) 
+		{
 			sb.append(result[i]);
 			sb.append(" ");
 		}
 		bookTitle = sb.toString();	
 	}
 	
-	private void processBookAuthor(String str) {
+	private void processBookAuthor(String str) 
+	{
 		String[] result = str.split("\\s");
 		StringBuilder sb = new StringBuilder();
-		for (int i = 1; i < result.length; i++) {
+		for (int i = 1; i < result.length; i++) 
+		{
 			sb.append(result[i]);
 			sb.append(" ");
 		}
 		authorName = sb.toString();
 	}
 	
-	private void processVolume(String str) {
+	private void processVolume(String str) 
+	{
 		hasVolume = true;
-		if (hasVolume && !bookExists) {
+		if (hasVolume && !bookExists) 
+		{
 			bookVolume = new Book<Volume>(bookTitle, authorName);
 			bookExists = true;
 		}
 		String[] result = str.split("\\s");
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < result.length; i++) {
+		for (int i = 0; i < result.length; i++) 
+		{
 			sb.append(result[i]);
 			sb.append(" ");
 		}
@@ -120,35 +164,46 @@ public class TextReader {
 		bookVolume.add(currentVolume);
 	}
 	
-	private void processChapter(String str) {
-		if (hasVolume == false && bookExists == false) {
+	private void processChapter(String str) 
+	{
+		if (hasVolume == false && bookExists == false) 
+		{
 			bookChapter = new Book<Chapter>(bookTitle, authorName);
 			bookExists = true;
 		}
 		String[] result = str.split("\\s");
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < result.length; i++) {
+		for (int i = 0; i < result.length; i++) 
+		{
 			sb.append(result[i]);
 			sb.append(" ");
 		}
 		String chapID = sb.toString();
 		currentChapter = new Chapter(chapID); 
-		if (hasVolume == true) {
+		if (hasVolume == true) 
+		{
 			currentVolume.add(currentChapter);
-		} else {
+		} 
+		else 
+		{
 			bookChapter.add(currentChapter);
 		}
 	}	
 
-	private void processParagraph(String str) {
+	private void processParagraph(String str) 
+	{
 		// lines can either have text or not at this point
 		// if lines have text, we need to save that text until it becomes blank again
 		// when it becomes blank again, whatever we have in our text becomes the paragraph
-		if (!(str.isEmpty())) {
+		if (!(str.isEmpty())) 
+		{
 			paragraphText.append(str);
 			paragraphText.append(" ");
-		} else {
-			if (paragraphText.length() > 0) {
+		} 
+		else 
+		{
+			if (paragraphText.length() > 0) 
+			{
 				currentParagraph = new Paragraph();
 				currentParagraph.add(paragraphText.toString());
 				currentChapter.add(currentParagraph);
