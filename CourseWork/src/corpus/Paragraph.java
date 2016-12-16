@@ -51,6 +51,42 @@ public class Paragraph {
 		return j;
 	}
 	
+	public String printKWIC(Word word, int contextSize) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(word.getID());
+		for (int i = 0; i < words.size(); i++) {
+			Word w = words.get(i);
+			if (w.equals(word)) {
+				int startNumber = i - contextSize;
+				
+				if (startNumber < 0) {
+					startNumber = 0;
+				}
+				
+				for (int v = startNumber; v < i; v++) {
+					sb.append(words.get(v));
+					sb.append(" ");
+				}
+				
+				sb.append(words.get(i));
+				sb.append(" ");
+				
+				int endNumber = i + contextSize;
+				
+				if (endNumber > words.size()) {
+					endNumber = words.size();
+				}
+				
+				for (int c = i + 1; c < endNumber; c++) {
+					sb.append(words.get(c));
+					sb.append(" ");
+				}
+			}
+		}
+		sb.append("/n");
+		return sb.toString();
+	}
+	
 	/*
 	 * A Search function that searches for every appearance of a word object 
 	 * and adds it to an array that lists info about said word.
