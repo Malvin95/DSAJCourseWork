@@ -82,7 +82,7 @@ public class TextReader {
 				sb.append(" ");
 			}
 			String volID = sb.toString();
-			currentVolume = new Volume(volID); //FIXME Volume needs a new constructor and field for id
+			currentVolume = new Volume(volID);
 			bookVolume.add(currentVolume);
 		} else if (str.contains("CHAPTER ") == true) {
 			if (hasVolume == false && bookExists == false) {
@@ -96,7 +96,7 @@ public class TextReader {
 				sb.append(" ");
 			}
 			String chapID = sb.toString();
-			currentChapter = new Chapter(chapID); //FIXME Chapter needs a new constructor and field for id
+			currentChapter = new Chapter(chapID); 
 			if (hasVolume == true) {
 				currentVolume.add(currentChapter);
 			} else {
