@@ -1,38 +1,38 @@
 package bookView;
 import corpus.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainController implements Controller{
 	
 	private ArrayList<TextReader> texts;
 	private TextReader text1;
-	private TextReader text2;
-	private TextReader text3;
+	//private TextReader text2;
+	//private TextReader text3;
 	
 	public MainController(){
-		text1 = new TextReader("data/emmaEd11.txt");
+		/*text1 = new TextReader("data/emmaEd11.txt");
 		text2 = new TextReader("data/mansfieldParkEd10.txt");
-		text3 = new TextReader("data/pandpEd12.txt");
+		text3 = new TextReader("data/pandpEd12.txt");*/
+		text1 = new TextReader("data/test.txt");
 		initaliseArray();
 	}
 	
 	private void initaliseArray() {
 		texts = new ArrayList<TextReader>();
 		texts.add(text1);
-		texts.add(text2);
-		texts.add(text3);
+		//texts.add(text2);
+		//texts.add(text3);
 	}
 	
 	@Override
 	public String getKWIC(String word) 
 	{
-		int idCount = 0;
-		String wordID = "ID  " + idCount + ":";
+		int idCount = 1;
+		String wordID = "ID  " + idCount + ": ";
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < texts.size(); i++) {
-			TextReader text = texts.get(i);
-			if (text.getHasVolume() == true) {
+		//for (int i = 0; i < texts.size(); i++) {
+			TextReader text = texts.get(0);
+			if (text.getHasVolume()) {
 				Book<Volume> book = text.getVolumeBook();
 				for(int c = 0; c < book.size(); c++) {
 					Volume vol = book.get(c);
@@ -42,7 +42,12 @@ public class MainController implements Controller{
 							Paragraph para = chap.get(n);
 							for(int x = 0; x < para.size(); x++) {
 								Word wor = para.get(x);
-								if (wor.match(word) == true) {
+								if (wor.matchWord(word)) {
+									System.out.print("Word matched");
+									Word w = wor;
+									w.setID(wordID);
+									idCount++;
+									sb.append(para.printKWIC(wor, 10)); // This will print the word in context, with 10 words either side
 									//TODO
 									// WORD HAS MATCHED WITH SEARCH:
 									// wor.setID(wordID);
@@ -62,7 +67,11 @@ public class MainController implements Controller{
 						Paragraph para = chap.get(n);
 						for(int x = 0; x < para.size(); x++) {
 							Word wor = para.get(x);
-							if (wor.match(word) == true) {
+							if (wor.matchWord(word) == true) {
+								Word w = wor;
+								w.setID(wordID);
+								idCount++;
+								sb.append(para.printKWIC(wor, 10)); // This will print the word in context, with 10 words either side
 								//TODO
 								// WORD HAS MATCHED WITH SEARCH:
 								// WE MUST ATTACH AN ID TO EACH WORD, AND DISPLAY
@@ -72,13 +81,15 @@ public class MainController implements Controller{
 					}
 				}
 			}
-		}
+		//}
 		return sb.toString();
 	}
 
 	@Override
 	public String getKWIC(String word, int contextSize) 
 	{
+		int idCount = 1;
+		String wordID = "ID  " + idCount + ": ";
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < texts.size(); i++) {
 			TextReader text = texts.get(i);
@@ -92,7 +103,11 @@ public class MainController implements Controller{
 							Paragraph para = chap.get(n);
 							for(int x = 0; x < para.size(); x++) {
 								Word wor = para.get(x);
-								if (wor.match(word) == true) {
+								if (wor.matchWord(word) == true) {
+									Word w = wor;
+									w.setID(wordID);
+									idCount++;
+									sb.append(para.printKWIC(wor, contextSize)); // This will print the word in context, with 10 words either side
 									//TODO
 									// WORD HAS MATCHED WITH SEARCH:
 									// WE MUST ATTACH AN ID TO EACH WORD, AND DISPLAY
@@ -110,7 +125,11 @@ public class MainController implements Controller{
 						Paragraph para = chap.get(n);
 						for(int x = 0; x < para.size(); x++) {
 							Word wor = para.get(x);
-							if (wor.match(word) == true) {
+							if (wor.matchWord(word) == true) {
+								Word w = wor;
+								w.setID(wordID);
+								idCount++;
+								sb.append(para.printKWIC(wor, contextSize)); // This will print the word in context, with 10 words either side
 								//TODO
 								// WORD HAS MATCHED WITH SEARCH:
 								// WE MUST ATTACH AN ID TO EACH WORD, AND DISPLAY
@@ -148,7 +167,7 @@ public class MainController implements Controller{
 							Paragraph para = chap.get(n);
 							for(int x = 0; x < para.size(); x++) {
 								Word wor = para.get(x);
-								if (wor.match(kwicID) == true) {
+								if (wor.matchID(kwicID) == true) {
 									sb.append("Word " + wor.getWord() + " is found in: /n");
 									sb.append(book.toString() + "/n");
 									sb.append("Volume number: " + (c + 1) + "/n");
@@ -167,7 +186,7 @@ public class MainController implements Controller{
 						Paragraph para = chap.get(n);
 						for(int x = 0; x < para.size(); x++) {
 							Word wor = para.get(x);
-							if (wor.match(kwicID) == true) {
+							if (wor.matchID(kwicID) == true) {
 								sb.append("Word " + wor.getWord() + " is found in: /n");
 								sb.append(book.toString() + "/n");
 								sb.append("Chapter number: " + (c + 1) + "/n");
