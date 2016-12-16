@@ -10,7 +10,7 @@ public class MainController implements Controller{
 	private TextReader text2;
 	private TextReader text3;
 	
-	public MainController() throws IOException {
+	public MainController(){
 		text1 = new TextReader("data/emmaEd11.txt");
 		text2 = new TextReader("data/mansfieldParkEd10.txt");
 		text3 = new TextReader("data/pandpEd12.txt");
