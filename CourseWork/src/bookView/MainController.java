@@ -6,31 +6,30 @@ public class MainController implements Controller{
 	
 	private ArrayList<TextReader> texts;
 	private TextReader text1;
-	//private TextReader text2;
-	//private TextReader text3;
+	private TextReader text2;
+	private TextReader text3;
+	int idCount;
+	String wordID = "ID  " + idCount + ": ";
 	
 	public MainController(){
-		/*text1 = new TextReader("data/emmaEd11.txt");
+		text1 = new TextReader("data/emmaEd11.txt");
 		text2 = new TextReader("data/mansfieldParkEd10.txt");
-		text3 = new TextReader("data/pandpEd12.txt");*/
-		text1 = new TextReader("data/test.txt");
+		text3 = new TextReader("data/pandpEd12.txt");
 		initaliseArray();
 	}
 	
 	private void initaliseArray() {
 		texts = new ArrayList<TextReader>();
 		texts.add(text1);
-		//texts.add(text2);
-		//texts.add(text3);
+		texts.add(text2);
+		texts.add(text3);
 	}
 	
 	@Override
 	public String getKWIC(String word) 
 	{
-		int idCount = 1;
-		String wordID = "ID  " + idCount + ": ";
 		StringBuilder sb = new StringBuilder();
-		//for (int i = 0; i < texts.size(); i++) {
+		for (int i = 0; i < texts.size(); i++) {
 			TextReader text = texts.get(0);
 			if (text.getHasVolume()) {
 				Book<Volume> book = text.getVolumeBook();
@@ -43,10 +42,9 @@ public class MainController implements Controller{
 							for(int x = 0; x < para.size(); x++) {
 								Word wor = para.get(x);
 								if (wor.matchWord(word)) {
-									System.out.print("Word matched");
-									Word w = wor;
-									w.setID(wordID);
-									idCount++;
+									//Word w = wor;
+									//w.setID(wordID);
+									//idCount++;
 									sb.append(para.printKWIC(wor, 10)); // This will print the word in context, with 10 words either side
 									//TODO
 									// WORD HAS MATCHED WITH SEARCH:
@@ -81,7 +79,7 @@ public class MainController implements Controller{
 					}
 				}
 			}
-		//}
+		}
 		return sb.toString();
 	}
 
@@ -173,6 +171,7 @@ public class MainController implements Controller{
 									sb.append("Volume number: " + (c + 1) + "/n");
 									sb.append("Chapter number: " + (v + 1) +  "/n");
 									sb.append("Paragraph number: " + (n + 1) + "/n");
+									return sb.toString();
 								}
 							}
 						}
@@ -191,13 +190,14 @@ public class MainController implements Controller{
 								sb.append(book.toString() + "/n");
 								sb.append("Chapter number: " + (c + 1) + "/n");
 								sb.append("Paragraph number: " + (n + 1) + "/n");
+								return sb.toString();
 							} 
 						}
 					}
 				}
 			}
 		}
-		return sb.toString();
+		return null;
 	}
 }
 
