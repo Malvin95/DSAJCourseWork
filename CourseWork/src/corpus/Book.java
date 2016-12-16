@@ -12,24 +12,32 @@ import java.util.ArrayList;
 public class Book<T> {
 	private String title;
 	private ArrayList<T> subSections;
-	private Author author;
+	private String author;
 	
-	public Book(String bookTitle, String authorName) {
+	public Book(String bookTitle, String authorName) 
+	{
 		title = bookTitle;
 		subSections = new ArrayList<T>();
-		author = new Author(authorName);
+		author = authorName;
 	}
 	
-	public void addSe(T t){
+	public void add(T t)
+	{
 		subSections.add(t);
 	}
 	
 	// Method which returns an object within the ArrayList.
-	public T get() {
-		return null;
+	public T get(int i) 
+	{
+		return subSections.get(i);
 	}
 	
-	public String toString() {
-		return "The book is called " + title;
+	public int size() {
+		return subSections.size();
+	}
+	
+	public String toString() 
+	{
+		return "The book is called " + title + ". /n The author's name is: " + author + ".";
 	}
 }

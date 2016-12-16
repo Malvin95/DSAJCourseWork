@@ -1,26 +1,30 @@
 package corpus;
 
-import java.util.ArrayList;
-
 /**
  * A class which models a Word within the Book.
  * 
- * @author S Saddique
+ * @author S Saddique, M Harding
  * @version 08/12/2016
  *
  */
 public class Word {
 	
+	private String ID;
 	private String word;
-	//private ArrayList<String> W;
-	String[] W;
+	
+	public Word() {
+		ID = "";
+		word = "";
+	}
 	
 	public Word(String word) 
 	{
+		ID = "";
 		this.word = word;
-		W = word.split(" ");
 	}
-
+	
+	/*
+	 * 
 	public int Search(String s)
 	{
 		int j = 0;
@@ -32,5 +36,31 @@ public class Word {
 			}
 		}
 		return j;
+	}
+	 */
+	
+	public void setWord(String word) {
+		this.word = word;
+	}
+	
+	public String getWord()
+	{
+		return word; 
+	}
+	
+	public void setID(String ID) {
+		this.ID = ID;
+	}
+	
+	public String getID() {
+		return ID;
+	}
+	
+	public boolean match(String kwicID) {
+		if (kwicID == ID) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
