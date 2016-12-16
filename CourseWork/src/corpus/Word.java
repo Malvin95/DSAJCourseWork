@@ -12,6 +12,11 @@ public class Word {
 	private String ID;
 	private String word;
 	
+	public Word() {
+		ID = "";
+		word = "";
+	}
+	
 	public Word(String word) 
 	{
 		ID = "";
@@ -34,6 +39,10 @@ public class Word {
 	}
 	 */
 	
+	public void setWord(String word) {
+		this.word = word;
+	}
+	
 	public String getWord()
 	{
 		return word; 
@@ -45,5 +54,13 @@ public class Word {
 	
 	public String getID() {
 		return ID;
+	}
+	
+	public boolean match(String kwicID) {
+		if (kwicID == ID) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
