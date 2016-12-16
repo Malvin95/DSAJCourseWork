@@ -30,14 +30,18 @@ public class TextReader {
 	private Chapter currentChapter;
 	private Paragraph currentParagraph;
 
-	public TextReader(String filename) throws IOException {
-
+	public TextReader(String filename) {
+	
+		try{
 		fr = new FileReader(filename);
 		br = new BufferedReader(fr);
 		String currentLine;
 		while ((currentLine = br.readLine()) != null) {
 			processLine(currentLine);    
 			// creation of book and its components - happens within processLine
+		}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 
@@ -71,7 +75,7 @@ public class TextReader {
 			authorName = sb.toString();
 		}   else if (str.contains("VOLUME ") == true) {
 			hasVolume = true;
-			if (hasVolume == true && bookExists == false) {
+			if (hasVolume && !bookExists) {
 				bookVolume = new Book<Volume>(bookTitle, authorName);
 				bookExists = true;
 			}
