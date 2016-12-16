@@ -2,7 +2,6 @@ package bookView;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 
 import corpus.*;
 
@@ -22,26 +21,29 @@ public class TextReader {
 	private String bookTitle;
 	private String authorName;
 	private boolean hasVolume = false;
-	//private boolean lineBreak;
+	//private boolean paragraphLineBreak;
 	private boolean bookExists = false;
 	private Book<Volume> bookVolume;
 	private Book<Chapter> bookChapter;
 	private Volume currentVolume;
 	private Chapter currentChapter;
-	private Paragraph currentParagraph;
+	private Paragraph currentParagraph = null;
+	StringBuilder paragraphText = new StringBuilder();
 
 	public TextReader(String filename) {
-	
+
 		try{
-		fr = new FileReader(filename);
-		br = new BufferedReader(fr);
-		String currentLine;
-		while ((currentLine = br.readLine()) != null) {
-			processLine(currentLine);    
-			// creation of book and its components - happens within processLine
-		}
-		}catch(Exception e){
+			fr = new FileReader(filename);
+			br = new BufferedReader(fr);
+			String currentLine = br.readLine();
+			while (currentLine != null) {
+				processLine(currentLine);    
+				currentLine = br.readLine();
+			}
+			//System.out.print("file read");
+		} catch(Exception e){
 			e.printStackTrace();
+
 		}
 	}
 
@@ -55,91 +57,103 @@ public class TextReader {
 		// 7: If line contains none of the above and it contains words, it is a paragraph. Create a paragraph object and put it in chapter.
 		// 8: If another line of text, add it into a stringbuilder for the paragraph object.
 		// 9: If a line break, this signals the end of the paragraph.
-		StringBuilder paragraphText = new StringBuilder();
-
+		
 		if (str.contains("Title: ") == true) {
-			String[] result = str.split("\\s");
-			StringBuilder sb = new StringBuilder();
-			for (int i = 1; i < result.length; i++) {
-				sb.append(result[i]);
-				sb.append(" ");
-			}
-			bookTitle = sb.toString();
+			processBookTitle(str);
 		} else if (str.contains("Author: ") == true) {
-			String[] result = str.split("\\s");
-			StringBuilder sb = new StringBuilder();
-			for (int i = 1; i < result.length; i++) {
-				sb.append(result[i]);
-				sb.append(" ");
-			}
-			authorName = sb.toString();
+			processBookAuthor(str);
 		}   else if (str.contains("VOLUME ") == true) {
-			hasVolume = true;
-			if (hasVolume && !bookExists) {
-				bookVolume = new Book<Volume>(bookTitle, authorName);
-				bookExists = true;
-			}
-			String[] result = str.split("\\s");
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < result.length; i++) {
-				sb.append(result[i]);
-				sb.append(" ");
-			}
-			String volID = sb.toString();
-			currentVolume = new Volume(volID);
-			bookVolume.add(currentVolume);
+			processVolume(str);
 		} else if (str.contains("CHAPTER ") == true) {
-			if (hasVolume == false && bookExists == false) {
-				bookChapter = new Book<Chapter>(bookTitle, authorName);
-				bookExists = true;
-			}
-			String[] result = str.split("\\s");
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < result.length; i++) {
-				sb.append(result[i]);
-				sb.append(" ");
-			}
-			String chapID = sb.toString();
-			currentChapter = new Chapter(chapID); 
-			if (hasVolume == true) {
-				currentVolume.add(currentChapter);
-			} else {
-				bookChapter.add(currentChapter);
-			}
-		} else if (!str.isEmpty()) {
-			// Create StringBuilder holding this text, appending every line
-			String[] result = str.split("\\s");
-			for (int i = 0; i < result.length; i++) {
-				paragraphText.append(result[i]);
-				paragraphText.append(" ");
-			}
-			//lineBreak = false;
-		} else if (str.isEmpty()) {
-			// Create paragraph with the StringBuilder.toString() text
-			String para = paragraphText.toString();
-			currentParagraph = new Paragraph();
-			currentParagraph.add(para);
-			currentChapter.add(currentParagraph);
-			//lineBreak = true;
-			paragraphText.setLength(0);
+			processChapter(str);
 		} else {
-			//ERROR: Nothing here
+			processParagraph(str);
 		}
-
-		//if (lineBreak == true) {
-		//	paragraphText.setLength(0);
-		//}
 	}
-	
+
 	public Book<Volume> getVolumeBook() {
 		return bookVolume;
 	}
-	
+
 	public Book<Chapter> getChapterBook() {
 		return bookChapter;
 	}
-	
+
 	public boolean getHasVolume() {
 		return hasVolume;
+	}
+
+	private void processBookTitle(String str) {
+		String[] result = str.split("\\s");
+		StringBuilder sb = new StringBuilder();
+		for (int i = 1; i < result.length; i++) {
+			sb.append(result[i]);
+			sb.append(" ");
+		}
+		bookTitle = sb.toString();	
+	}
+	
+	private void processBookAuthor(String str) {
+		String[] result = str.split("\\s");
+		StringBuilder sb = new StringBuilder();
+		for (int i = 1; i < result.length; i++) {
+			sb.append(result[i]);
+			sb.append(" ");
+		}
+		authorName = sb.toString();
+	}
+	
+	private void processVolume(String str) {
+		hasVolume = true;
+		if (hasVolume && !bookExists) {
+			bookVolume = new Book<Volume>(bookTitle, authorName);
+			bookExists = true;
+		}
+		String[] result = str.split("\\s");
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < result.length; i++) {
+			sb.append(result[i]);
+			sb.append(" ");
+		}
+		String volID = sb.toString();
+		currentVolume = new Volume(volID);
+		bookVolume.add(currentVolume);
+	}
+	
+	private void processChapter(String str) {
+		if (hasVolume == false && bookExists == false) {
+			bookChapter = new Book<Chapter>(bookTitle, authorName);
+			bookExists = true;
+		}
+		String[] result = str.split("\\s");
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < result.length; i++) {
+			sb.append(result[i]);
+			sb.append(" ");
+		}
+		String chapID = sb.toString();
+		currentChapter = new Chapter(chapID); 
+		if (hasVolume == true) {
+			currentVolume.add(currentChapter);
+		} else {
+			bookChapter.add(currentChapter);
+		}
+	}	
+
+	private void processParagraph(String str) {
+		// lines can either have text or not at this point
+		// if lines have text, we need to save that text until it becomes blank again
+		// when it becomes blank again, whatever we have in our text becomes the paragraph
+		if (!(str.isEmpty())) {
+			paragraphText.append(str);
+			paragraphText.append(" ");
+		} else {
+			if (paragraphText.length() > 0) {
+				currentParagraph = new Paragraph();
+				currentParagraph.add(paragraphText.toString());
+				currentChapter.add(currentParagraph);
+				paragraphText.setLength(0);
+			}
+		}
 	}
 }
